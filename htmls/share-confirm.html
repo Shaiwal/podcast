@@ -1,0 +1,19 @@
+<!-- Share Confirmation -->
+  <!-- content section starts -->
+<script>
+  var PODCAST = PODCAST || {};
+    $(document).ready(function(e){
+     (function() {
+        try{
+             PODCAST.Xhr(PODCAST.parseNotificationCount, "/api/getNewNotificationsCount/"+PODCAST.user.cecId, "GET");
+        }catch(err){
+            console.log("Error", err);
+        }
+    
+    })();
+   });
+</script>
+  <section class="shareConfirmation user-login">
+        <div class="tick-confirmation"></div>
+        <h2 class="alignCenter spacer-mb150">Successfully Shared.</h2>
+</section>

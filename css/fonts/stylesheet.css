@@ -1,0 +1,144 @@
+@font-face {
+    font-family: 'CiscoSansTT';
+    src: url('CiscoSansTT-HeavyOblique.eot');
+    src: url('CiscoSansTT-HeavyOblique.eot?#iefix') format('embedded-opentype'),
+        url('CiscoSansTT-HeavyOblique.woff2') format('woff2'),
+        url('CiscoSansTT-HeavyOblique.woff') format('woff'),
+        url('CiscoSansTT-HeavyOblique.ttf') format('truetype'),
+        url('CiscoSansTT-HeavyOblique.svg#CiscoSansTT-HeavyOblique') format('svg');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'CiscoSansTT';
+    src: url('CiscoSansTT.eot');
+    src: url('CiscoSansTT.eot?#iefix') format('embedded-opentype'),
+        url('CiscoSansTT.woff2') format('woff2'),
+        url('CiscoSansTT.woff') format('woff'),
+        url('CiscoSansTT.ttf') format('truetype'),
+        url('CiscoSansTT.svg#CiscoSansTT') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CiscoSansTT';
+    src: url('CiscoSansTT-BoldOblique.eot');
+    src: url('CiscoSansTT-BoldOblique.eot?#iefix') format('embedded-opentype'),
+        url('CiscoSansTT-BoldOblique.woff2') format('woff2'),
+        url('CiscoSansTT-BoldOblique.woff') format('woff'),
+        url('CiscoSansTT-BoldOblique.ttf') format('truetype'),
+        url('CiscoSansTT-BoldOblique.svg#CiscoSansTT-BoldOblique') format('svg');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'CiscoSansTT';
+    src: url('CiscoSansTT-Thin.eot');
+    src: url('CiscoSansTT-Thin.eot?#iefix') format('embedded-opentype'),
+        url('CiscoSansTT-Thin.woff2') format('woff2'),
+        url('CiscoSansTT-Thin.woff') format('woff'),
+        url('CiscoSansTT-Thin.ttf') format('truetype'),
+        url('CiscoSansTT-Thin.svg#CiscoSansTT-Thin') format('svg');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CiscoSansTT';
+    src: url('CiscoSansTT-ExtraLight.eot');
+    src: url('CiscoSansTT-ExtraLight.eot?#iefix') format('embedded-opentype'),
+        url('CiscoSansTT-ExtraLight.woff2') format('woff2'),
+        url('CiscoSansTT-ExtraLight.woff') format('woff'),
+        url('CiscoSansTT-ExtraLight.ttf') format('truetype'),
+        url('CiscoSansTT-ExtraLight.svg#CiscoSansTT-ExtraLight') format('svg');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CiscoSansTT';
+    src: url('CiscoSansTTLight-Oblique.eot');
+    src: url('CiscoSansTTLight-Oblique.eot?#iefix') format('embedded-opentype'),
+        url('CiscoSansTTLight-Oblique.woff2') format('woff2'),
+        url('CiscoSansTTLight-Oblique.woff') format('woff'),
+        url('CiscoSansTTLight-Oblique.ttf') format('truetype'),
+        url('CiscoSansTTLight-Oblique.svg#CiscoSansTTLight-Oblique') format('svg');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'CiscoSansTT';
+    src: url('CiscoSansTT-Oblique.eot');
+    src: url('CiscoSansTT-Oblique.eot?#iefix') format('embedded-opentype'),
+        url('CiscoSansTT-Oblique.woff2') format('woff2'),
+        url('CiscoSansTT-Oblique.woff') format('woff'),
+        url('CiscoSansTT-Oblique.ttf') format('truetype'),
+        url('CiscoSansTT-Oblique.svg#CiscoSansTT-Oblique') format('svg');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'CiscoSansTT';
+    src: url('CiscoSansTTLight.eot');
+    src: url('CiscoSansTTLight.eot?#iefix') format('embedded-opentype'),
+        url('CiscoSansTTLight.woff2') format('woff2'),
+        url('CiscoSansTTLight.woff') format('woff'),
+        url('CiscoSansTTLight.ttf') format('truetype'),
+        url('CiscoSansTTLight.svg#CiscoSansTTLight') format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CiscoSansTT';
+    src: url('CiscoSansTT-Heavy.eot');
+    src: url('CiscoSansTT-Heavy.eot?#iefix') format('embedded-opentype'),
+        url('CiscoSansTT-Heavy.woff2') format('woff2'),
+        url('CiscoSansTT-Heavy.woff') format('woff'),
+        url('CiscoSansTT-Heavy.ttf') format('truetype'),
+        url('CiscoSansTT-Heavy.svg#CiscoSansTT-Heavy') format('svg');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CiscoSansTT';
+    src: url('CiscoSansTT-ExtraLightOblique.eot');
+    src: url('CiscoSansTT-ExtraLightOblique.eot?#iefix') format('embedded-opentype'),
+        url('CiscoSansTT-ExtraLightOblique.woff2') format('woff2'),
+        url('CiscoSansTT-ExtraLightOblique.woff') format('woff'),
+        url('CiscoSansTT-ExtraLightOblique.ttf') format('truetype'),
+        url('CiscoSansTT-ExtraLightOblique.svg#CiscoSansTT-ExtraLightOblique') format('svg');
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'CiscoSansTT';
+    src: url('CiscoSansTT-ThinOblique.eot');
+    src: url('CiscoSansTT-ThinOblique.eot?#iefix') format('embedded-opentype'),
+        url('CiscoSansTT-ThinOblique.woff2') format('woff2'),
+        url('CiscoSansTT-ThinOblique.woff') format('woff'),
+        url('CiscoSansTT-ThinOblique.ttf') format('truetype'),
+        url('CiscoSansTT-ThinOblique.svg#CiscoSansTT-ThinOblique') format('svg');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'CiscoSansTT';
+    src: url('CiscoSansTT-Bold.eot');
+    src: url('CiscoSansTT-Bold.eot?#iefix') format('embedded-opentype'),
+        url('CiscoSansTT-Bold.woff2') format('woff2'),
+        url('CiscoSansTT-Bold.woff') format('woff'),
+        url('CiscoSansTT-Bold.ttf') format('truetype'),
+        url('CiscoSansTT-Bold.svg#CiscoSansTT-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+

@@ -1,0 +1,17 @@
+---
+kind: "Route"
+apiVersion: "v1"
+metadata:
+  name: "icxpoc-proj1-dev"
+  labels:
+     component: "icxpoc-proj1-dev-svc"
+spec:
+   host: "icxpoc-dev.cisco.com"
+   to:
+     kind: "Service"
+     name: "icxpoc-proj1-dev-svc"
+   port:
+     targetPort: "web"
+   tls:
+     insecureEdgeTerminationPolicy: Allow
+     termination: edge

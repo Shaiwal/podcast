@@ -1,0 +1,130 @@
+ <script>
+     $("#loaderModal").show();
+	document.documentElement.scrollTop = 0;
+    var PODCAST = PODCAST || {};
+    $(document).ready(function(e){
+      function timeSince(shared_time) {
+          var interval;
+          interval = Math.floor(shared_time / 3600);
+          if (interval > 0) {
+            return interval + " hours";
+          }
+          interval = Math.floor(shared_time % 3600 / 60);
+          if (interval > 0) {
+            return interval + " minutes";
+          }
+          return Math.floor(shared_time) + " seconds";
+     }
+    PODCAST.getNotifications = function(data){	
+        $("#loaderModal").hide();
+        var notificationId = [];
+        var tracks =[];
+        var trackDetails =[];
+        if(data.responseCode === 1 && data.response!=null && data.response.length > 0){
+            var j=0;
+            for(var i=0; i <data.response.length; i++){
+                notificationId[i]=data.response[i]._id;
+                trackDetails = {"filename": data.response[i].track.filename, "_id": data.response[i]._id}
+                PODCAST.alltracks.push(trackDetails);
+                var cln,elm;
+                elm= document.getElementsByClassName("list-item")[0];
+                if(j>0){
+                    cln= elm.cloneNode(true);
+                    document.getElementsByClassName("userHomePage")[0].appendChild(cln);
+                    $(cln).find(".tile").attr("amplitude-song-index",j);
+                }
+                else{
+                    cln= elm;
+                }
+                $(".list-item").css("display","block");
+                $(cln).find(".title").text(data.response[i].track.filename);                 
+                $(cln).find(".desc").text(data.response[i].track.description);
+                $(cln).find(".desc").append( '</br><span>by '+ data.response[i].track.full_name +'</span>');
+                var date = new Date(data.response[i].track.created_on);
+                $(cln).find(".date").text(date.toDateString().slice(3));  
+                $(cln).find(".btn-share").attr("id",data.response[i].track._id);
+                $(cln).find(".shared-time").text(timeSince(data.response[i].duration.sec)+ " ago");
+                var cover_art_url = null;
+                if(data.response[i].track.track_icon && Array.isArray(data.response[i].track.track_icon)){
+                    $(cln).find("#icon").attr("src","data:image/png;base64,"+ data.response[i].track.track_icon[0].buffer); 
+                    cover_art_url = "data:image/png;base64,"+ data.response[i].track.track_icon[0].buffer;
+                }else if(data.response[i].track.track_icon){
+                    $(cln).find("#icon").attr("src", data.response[i].track.track_icon);
+                    cover_art_url = data.response[i].track.track_icon;
+                }
+                var track = {
+                          "name": data.response[i].track.filename,
+                          "artist": data.response[i].track.description + '</br><span>by '+ data.response[i].track.full_name +'</span>',
+                          "url":  data.response[i].track.url, 
+                          // "url":"/api/singleTrack/"+data.response[i].track._id+"/"+PODCAST.user.sessionId,
+                          "live":true,
+                          "cover_art_url":cover_art_url
+                }
+               // PODCAST.getAudioDuration(track.url,$(cln).find(".audio-duration"));
+                tracks.push(track);
+                j++;
+            }            
+            Amplitude.init({
+              "songs": tracks
+            });
+            try{
+            PODCAST.Xhr(PODCAST.updateNotification, "/api/updateNotifications", "POST", JSON.stringify(notificationId));
+            }catch(err){
+            console.log("Error", err);
+            }
+        }
+        else{
+            document.getElementsByClassName("audio-list")[0].innerHTML = "<h1>No Notifications</h1>";            
+        }
+    };
+
+    PODCAST.updateNotification = function(data){          
+        if(data.responseCode === 1 && data.response!=null && data.response.length > 0){
+            PODCAST.Xhr(PODCAST.parseNotificationCount, "/api/getNewNotificationsCount/"+PODCAST.user.cecId, "GET");
+        }
+        else{
+            PODCAST.Xhr(PODCAST.parseNotificationCount, "/api/getNewNotificationsCount/"+PODCAST.user.cecId, "GET");
+        }
+    };
+        
+   (function() {
+      try{
+          PODCAST.Xhr(PODCAST.getNotifications, "/api/allNotifications/"+PODCAST.user.cecId, "GET");
+      }catch(err){
+          console.log("Error", err);
+      }
+
+    })();
+  if($("#user-view-btn").text() === "User View"){
+      $(".editor-view").show();
+  }
+});
+</script>
+      <section class="audio-list clearAll">
+        <h1>Notifications</h1>
+      <ul class="accordion">
+          <li class="userHomePage">
+            <div class="list-item" >
+                <div class="clearAll tile amplitude-play-pause" amplitude-song-index="0" >
+                    <article class="audio-thumbnail"><img id="icon" src="" width="100%" alt="Audio Thumbnail"></article>
+                    <article class="audio-info clearAll">
+                        <span class="date"></span>
+                       <!-- <span class="audio-date"></span>-->
+                       <!-- <span class="new-audio"></span>-->
+                        <span class="audio-duration"></span>
+                        <h3 class="title notification-text">
+                            <a href="#" class="notification-text"></a></h3>
+                        <p class="desc"></p>
+                        
+                  <p class="shared-time"></p>
+                    </article>
+                  </div>
+                  <ul class="clearAll editor-view">
+                      <li><a href="#" title="Delete Audio"><img src="images/img-delete.png" width="80" alt="Delete Audio"></a></li>
+                      <li><a href="#" title="Edit Audio"><img src="images/img-edit.png" width="80" alt="Edit Audio"></a></li>
+                      <li class="btn-action btn-bg-green"><a href="share-recording.html" class="btn-share" title="Share Audio">Share</a></li>
+                  </ul>
+              </div>
+      </ul>
+      </section>
+      

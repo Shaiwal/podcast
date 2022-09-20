@@ -1,0 +1,75 @@
+        <div id="flat-black-player-container">
+            
+            <div id="player-screen">
+              <div class="player-header down-header">
+                <img id="down" src="img/down.svg"/>
+              </div>
+              <div id="player-top">
+                <img amplitude-song-info="cover_art_url" amplitude-main-song-info="true"/>
+              </div>
+              <div id="player-progress-bar-container">
+                <progress id="song-played-progress" class="amplitude-song-played-progress" amplitude-main-song-played-progress="true"></progress>
+                <progress id="song-buffered-progress" class="amplitude-buffered-progress" value="0"></progress>
+              </div>
+              <div id="player-middle">
+                <div id="time-container">
+                  <span class="amplitude-current-time time-container" amplitude-main-current-time="true"></span>
+                  <span class="amplitude-duration-time time-container" amplitude-main-duration-time="true"></span>
+                </div>
+                <div id="meta-container">
+                  <span amplitude-song-info="name" amplitude-main-song-info="true" class="song-name"></span>
+
+                  <div class="song-artist-album">
+                    <span amplitude-song-info="artist" amplitude-main-song-info="true"></span>
+                  </div>
+                </div>
+              </div>
+              <div id="player-bottom">
+                <div id="control-container">
+                  <div id="prev-container">
+                    <div class="amplitude-prev" id="previous"></div>
+                  </div>
+
+                  <div id="play-pause-container">
+                    <div class="amplitude-play-pause amplitude-playing" amplitude-main-play-pause="true" id="play-pause"></div>
+                  </div>
+
+                  <div id="next-container">
+                    <div class="amplitude-next" id="next"></div>
+                  </div>
+                </div>
+                <div id="volume-container">
+                  <img src="img/volume.svg"/><input type="range" class="amplitude-volume-slider" step=".1"/>
+                </div>
+              </div>
+            </div>
+            </div>
+            
+          <script type="text/javascript">
+		Amplitude.init({
+			"songs": [
+				{
+					"name": "Cisco Cloud Unfiltered Podcasts 1",
+					"artist": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+					"url": "audios/abc.mp3",
+					"cover_art_url": "images/img-preview-01.png"
+				},
+				{
+					"name": "Cisco Cloud Unfiltered Podcasts 2",
+					"artist": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+					"url": "audios/pqr.mp3",
+					"cover_art_url": "images/img-preview-01.png"
+				},
+				{
+					"name": "Cisco Cloud Unfiltered Podcasts 3",
+					"artist": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+					"url": "audios/xyz.mp3",
+					"cover_art_url": "images/img-preview-01.png"
+				}
+			]
+		});
+
+	</script>
+  <script type="text/javascript" src="js/audioFunctions.js"></script>
+  
+

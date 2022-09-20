@@ -1,0 +1,19 @@
+---
+kind: "Route"
+apiVersion: "v1"
+metadata:
+  name: "icxpoc1-stg-b2x"
+  labels:
+     component: "icxpoc1-proj1-b2x-svc"
+  annotations: 
+    haproxy.router.openshift.io/timeout: 60s
+spec:
+   host: "icxpoc1-stg-b2x.cisco.com"
+   to:
+     kind: "Service"
+     name: "icxpoc1-proj1-b2x-svc"
+   port:
+     targetPort: "web"
+   tls:
+     insecureEdgeTerminationPolicy: Allow
+     termination: edge

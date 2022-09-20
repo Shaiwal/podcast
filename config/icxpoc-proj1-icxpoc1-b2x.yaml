@@ -1,0 +1,149 @@
+kind: "Service"
+apiVersion: "v1"
+metadata:
+  name: "icxpoc1-proj1-b2x-svc"
+spec:
+  ports:
+    -
+      name: "web"
+      protocol: "TCP"
+      port: 8080
+  selector:
+    name: "icxpoc1-proj1-b2x"
+  type: "ClusterIP"
+  sessionAffinity: "None"
+---
+kind: "Deployment"
+apiVersion: "apps/v1beta1"
+metadata:
+  name: "icxpoc1-proj1-b2x"
+spec:
+  template:
+    metadata:
+      labels:
+        name: "icxpoc1-proj1-b2x"
+      annotations:
+        app_version: 'latest'
+    spec:
+      containers:
+        -
+          name: "icxpoc1-proj1-b2x"
+          image: "containers.cisco.com/it_cits_csas/icxpocdeploy_icxpoc-proj1:__IMAGETAG__"
+          ports:
+           -  containerPort: 8080
+              protocol: "TCP"
+          env:
+           -  name: "APP_NAME"
+              value: "icxpoc1-proj1-b2x"
+           -  name: "CISCO_LC"
+              value: "b2x"
+           -  name: "OPENSHIFT_APP_NAME"
+              value: "icxpoc1-proj1-b2x"
+
+           -
+              name: "CISCO_LC"
+              value: "poc"
+
+           - 
+              name: "MONGODB_PASSWORD"
+              valueFrom:
+                  secretKeyRef:
+                    name: "mongo-secret"
+                    key: "password"
+
+           - 
+              name: "MONGODB_USER"
+              valueFrom:
+                  secretKeyRef:
+                    name: "mongo-secret"
+                    key: "username"
+
+           - 
+              name: "MONGO_APP_NAME"
+              value: "cdcsmbprodrepo-yiz1kf3xstg-3-cdcsmbprodrepo.cloudapps.cisco.com"
+
+           - 
+              name: "MONGO_PORT"
+              value: "55081"
+
+           - 
+              name: "MONGODB_DATABASE"
+              value: "Personalization"
+              
+           - 
+              name: "MONGODB_CLOUD_PASSWORD"
+              valueFrom:
+                  secretKeyRef:
+                    name: "mongo-cloud-secret"
+                    key: "password"
+
+           - 
+              name: "MONGODB_CLOUD_USER"
+              valueFrom:
+                  secretKeyRef:
+                    name: "mongo-cloud-secret"
+                    key: "username"
+                    
+           - 
+              name: "MONGO_REPLICA_HOSTS"
+              value: "mgdb-cdcstg-npd2-1.cisco.com:27060,mgdb-cdcstg-npd1-1.cisco.com:27060,mgdb-cdcstg-npd3-1.cisco.com:27060"
+
+           - 
+              name: "MONGO_REPLICA_SET"
+              value: "cdcstgnpdrs"   
+                   
+          resources:
+            limits:
+              memory: 2Gi
+            requests:
+              cpu: 120m
+              memory: 1Gi
+           
+          volumeMounts:
+            -
+              name: podinfo
+              mountPath: /etc/metadata
+              readOnly: false
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            capabilities: {}
+            privileged: false
+          #readinessProbe:
+          #  httpGet:
+          #    path: "/"
+          #    port: 8080
+          #  initialDelaySeconds: 15
+          #  timeoutSeconds: 1
+          #livenessProbe:
+          #  exec:
+          #    command:
+          #      - "/bin/true"
+          #  initialDelaySeconds: 15
+          #  timeoutSeconds: 1
+      volumes:
+        -
+          name: podinfo
+          downwardAPI:
+            items:
+              -
+                path: "labels"
+                fieldRef:
+                  fieldPath: metadata.labels
+              -
+                path: "annotations"
+                fieldRef:
+                  fieldPath: metadata.annotations
+        - name: "icxpoc1-proj1-b2x"
+          emptydir: {}
+      restartPolicy: "Always"
+      dnsPolicy: "ClusterFirst"
+  replicas: 1
+  triggers:
+    -
+      type: "ConfigChange"
+  strategy:
+    type: "RollingUpdate"
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 300

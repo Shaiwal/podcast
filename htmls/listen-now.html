@@ -1,0 +1,52 @@
+<script>
+	$("#loaderModal").show();
+    document.documentElement.scrollTop = 0;
+    if($("#user-view-btn").text() === "User View"){
+        PODCAST.Xhr(PODCAST.parseAllTracks, "/api/allRecordings/"+PODCAST.user.cecId, "GET");
+       $(".editor-view").show();
+        $("#contentArea").removeClass("top-content-visible");
+        $(".play").removeClass("top-content-visible");
+    }else{
+        $("#contentArea").addClass("top-content-visible");
+         $(".play").addClass("top-content-visible");
+        PODCAST.Xhr(PODCAST.parseAllTracks, "/api/allTracks/" + PODCAST.user.groupNameString, "GET");
+    }
+    $(".tab-listen-now").parent("li").addClass("tab-active");
+    $(".tab-listen-now").parent("li").siblings().removeClass("tab-active");
+</script>
+
+<section class="audio-list clearAll">
+  <h1 class="homepage-title">Listen Now</h1>
+<ul class="accordion">
+	<li class="userHomePage">
+    <div class="list-item" >
+        <div class="clearAll tile amplitude-play-pause" amplitude-song-index="0" >
+          <article class="audio-thumbnail"><img id="icon" src="" width="100%" alt="Audio Thumbnail"></article>
+          <article class="audio-info clearAll">
+              <span class="date"></span>
+              <!--<span class="audio-date"></span>-->
+              <!--<span class="new-audio">New</span>-->
+              <span class="audio-duration"></span>
+              <h3 class="clearAll title"></h3>
+              <p class="desc"></p>
+              
+        <!--<p class="edit-update">Edited by John Smith on 24 July 2018</p>-->
+          </article>
+        </div>
+        <ul class="clearAll editor-view">
+            <li><a href="#" title="Delete Audio"><img src="images/img-delete.png" width="80" alt="Delete Audio"></a></li>
+            <li><a href="#" title="Edit Audio"><img src="images/img-edit.png" width="80" alt="Edit Audio"></a></li>
+            <li class="btn-action btn-bg-green"><a href="javascript:void(0);" class="btn-share" title="Share Audio">Share</a></li>
+        </ul>
+    </div>
+  </li>
+</ul>
+</section>
+<script>
+if(PODCAST.user.isAdminView === true){
+    $(".homepage-title").text("All Recordings");
+}
+else{
+    $(".homepage-title").text("Listen Now");
+}    
+</script>

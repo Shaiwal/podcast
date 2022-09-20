@@ -1,0 +1,206 @@
+        <!-- content section starts -->
+    <section class="user-login">
+        <a href="javascript:void(0);" onclick="PODCAST.loadHTML('./htmls/listen-now.html');" class="back-to-page"><img src="images/img-back.png" width="26" alt="Back" class="previous-link"></a>
+        <h1>Upload Recording</h1>
+        <form name="uploadTrackForm" id="uploadTrackForm">
+           <!-- <div class="upload-btn-wrapper">
+              <button id="track_browse">Browse file...</button>
+              <input type="file" id="track" name="myfile" accept= "audio/mp3"/>
+            </div> -->
+            <div class="user-inputs"><input type="text" id="fileURL" name="fileURL" placeholder="Recording URL" ></div>
+            <h2>Choose image</h2>
+            <ul class="clearAll">
+                <li><div class="upload-btn-wrapper"><button class="img-browse"></button><input type="file" id="track_icon" name="track_icon" class="img-upload" accept= "image/*"/></div></li>
+                <li><img src="images/img-thumb-04.png" class="default_track_icon"  width="158" alt="Image Thumbanail"></li>
+                <li><img src="images/img-thumb-03.png" class="default_track_icon"  width="158" alt="Image Thumbanail"></li>
+                <li><img src="images/img-thumb-02.png" class="default_track_icon"  width="158" alt="Image Thumbanail"></li>
+            </ul>
+            <div class="user-inputs"><input type="text" id="name" name="name" placeholder="Title" ></div>
+            <div class="user-inputs"><input type="text" id="description" name="description" placeholder="Details"></div>
+            <div class="user-inputs"><input type="text" id="authorName" name="authorName" placeholder="Author Name"></div>
+            <div><button type="submit" class="btn-action btn-bg-green">Upload</button></div>
+        </form>
+    </section>
+    <script>
+        var PODCAST = PODCAST || {};
+    
+        $(document).ready(function(e){
+        var isImageSelected = false;
+        var imagePath = "";
+        var prevDefaultImage = null;
+        $(document).on('click', ".default_track_icon", function(e){
+            if(prevDefaultImage){
+                prevDefaultImage.removeClass("default-selected");
+            }
+            prevDefaultImage = $(this);                    
+            isImageSelected = true;
+            imagePath = $(this).attr('src');
+            $(this).addClass("default-selected");
+            if($("#track_icon").prop('files')[0] !== null){
+                $(".img-browse").css("background",'url(../images/img-thumb-00.png) 0 0 no-repeat');
+                $(".img-browse").css("background-size","cover");
+                $(".img-browse").css("background-repeat","no-repeat");
+                $(".img-browse").css("background-position","center");
+                $("#track_icon").val('');
+             }
+        });
+
+        $("#track").on("change",function(){
+            $("#track_browse").text($("#track").prop('files')[0].name);
+        });
+        $("#track_icon").on("change",function(){
+            var reader= new FileReader();
+            reader.onload = function(e) {
+                $(".img-browse").css("background",'url('+e.target.result+ ')');
+                $(".img-browse").css("background-size","cover");
+                $(".img-browse").css("background-repeat","no-repeat");
+                $(".img-browse").css("background-position","center");
+
+            }
+            reader.readAsDataURL(this.files[0]);
+            if($("#track_icon").prop('files')[0] !== null && isImageSelected){
+            $(".default_track_icon").removeClass("default-selected");
+            isImageSelected= false;  
+            } 
+        });           
+        $("#uploadTrackForm .user-inputs #authorName").val(PODCAST.user.cecId);    
+        $("#uploadTrackForm .user-inputs #authorName").prop('disabled', true);    
+        var wasSubmitted = false;  
+        function checkBeforeSubmit(){
+            if(!wasSubmitted) {
+             wasSubmitted = true;
+             return wasSubmitted;
+            }
+        return false;
+        } 
+        
+        /*$(document).on('submit', "#uploadTrackForm", function(e){     
+        if(!checkBeforeSubmit()){
+                   console.log("Not submitting");
+        }
+        else{
+            console.log("Submitting");
+            $("#loaderModal").show();
+            e.preventDefault();
+            var formData = new FormData();            
+            formData.append("track",  $("#track").prop('files')[0]);
+            formData.append("name",  $("#name").val());
+            formData.append("description",  $("#description").val());
+            formData.append("authorName",  $("#authorName").val());
+            formData.append("requestedBy", PODCAST.user.cec_id);
+    
+            if($("#track_icon").prop('files')[0] == null && isImageSelected){
+                formData.append("isTrackIconFile",  false);
+                formData.append("track_icon",  imagePath);
+                PODCAST.Xhr(PODCAST.parseUploadTracks, "http://localhost:3000/api/uploadTrack", "POST", formData, false, false, false, "multipart/form-data");
+            }else{
+                formData.append("isTrackIconFile",  true);
+                formData.append("track_icon",  $("#track_icon").prop('files')[0]);
+                PODCAST.Xhr(PODCAST.parseUploadTracks, "http://localhost:3000/api/uploadTrack", "POST", formData, false, false, false, "multipart/form-data");
+            } 
+        }
+        });*/
+		
+            $('#uploadTrackForm').submit(function(e) {
+                console.log("Submitting");
+				var pattern = /^(?!\d+$)(?:[a-zA-Z0-9][a-zA-Z0-9 @&$!_#%()*[\]\\/,:'"~?.-]*)?$/;
+                var urlPattern = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
+                    
+            /* if($("#track").val() === ''){
+                $("#uploadTrackForm #track_browse").text("Please select track to upload")
+                $("#uploadTrackForm #track_browse").css("border","1px solid red");
+                return false;
+            }
+            else{
+                $("#uploadTrackForm #track_browse").css("border","");
+            }*/
+            if(!$("#uploadTrackForm .user-inputs #fileURL").val().match(urlPattern) || $("#uploadTrackForm .user-inputs #fileURL").val() === ''){
+                $("#uploadTrackForm .user-inputs #fileURL").val('');
+                $("#fileURL").attr("placeholder","Please add recording URL ");
+                $("#fileURL").closest("div").css("border","1px solid red");
+                return false;
+            }
+            else{
+                $("#fileURL").closest("div").css("border","");
+            }
+            if($("#track_icon").val() === '' && imagePath === ''){
+                $(".img-browse").css("border","1px solid red");
+                $("#uploadTrackForm h2").html("Browse track icon or select from default");
+                $("#uploadTrackForm h2").css("color","red");
+                return false;
+            }
+            else{
+                $(".img-browse").css("border","");
+                $("#uploadTrackForm h2").html("Choose image");
+                $("#uploadTrackForm h2").css("color","");
+            }
+            if(!$("#uploadTrackForm .user-inputs #name").val().match(pattern) || $("#uploadTrackForm .user-inputs #name").val() === ''){
+                $("#uploadTrackForm .user-inputs #name").val('');
+                $("#name").attr("placeholder","Please add title ");
+                $("#name").closest("div").css("border","1px solid red");
+                return false;
+            }
+            else{
+                $("#name").closest("div").css("border","");
+            }
+            if(!$("#uploadTrackForm .user-inputs #description").val().match(pattern) || $("#uploadTrackForm .user-inputs #description").val() === ''){
+                $("#uploadTrackForm .user-inputs #description").val('');
+                $("#description").attr("placeholder","Please add description ");
+                $("#description").closest("div").css("border","1px solid red");
+                return false;
+            }
+            else{
+                $("#description").closest("div").css("border","");
+            }
+           
+            /*if(!$("#uploadTrackForm .user-inputs #authorName").val().match(pattern) || $("#uploadTrackForm .user-inputs #authorName").val() === ''){
+                $("#uploadTrackForm .user-inputs #authorName").val('');
+               $("#authorName").attr("placeholder","Please add author");
+                $("#authorName").closest("div").css("border","1px solid red");
+                return false;
+            }else{
+                $("#authorName").closest("div").css("border","");
+            }*/
+            $("#loaderModal").show();
+            e.preventDefault();
+            $('#uploadTrackForm').unbind('submit'); 
+            var formData = new FormData();            
+          //  formData.append("track",  $("#track").prop('files')[0]);
+            formData.append("fileURL",  $("#fileURL").val());
+            formData.append("name",  $("#name").val());
+            formData.append("description",  $("#description").val());
+            formData.append("authorName",  PODCAST.user.cecId);
+            formData.append("requestedBy", PODCAST.user.cecId);
+          //  formData.append("groupName", PODCAST.user.groupName);
+            formData.append("fullName", PODCAST.user.fullname);
+            
+            if($("#track_icon").prop('files')[0] == null && isImageSelected){
+                formData.append("isTrackIconFile",  false);
+                formData.append("track_icon",  imagePath);
+            }else{
+                formData.append("isTrackIconFile",  true);
+                formData.append("track_icon",  $("#track_icon").prop('files')[0]);
+            } 
+                
+            //PODCAST.Xhr(PODCAST.parseUploadTracks, "/api/uploadTrack", "POST", formData, false, false, false, "multipart/form-data");
+            PODCAST.Xhr(PODCAST.parseUploadTracks, "/api/uploadTrackURI", "POST", formData, false, false, false, "multipart/form-data");
+            });
+    
+        PODCAST.parseUploadTracks = function(data){
+            $("#loaderModal").hide();
+            // PODCAST.loadHTML("./htmls/uploading-progress-bar.html");
+            setTimeout(function(e){
+            if(data.responseCode === 1 && data.response!=null){
+                PODCAST.loadHTML("./htmls/upload-confirm.html");
+                setTimeout(function(e){
+                    PODCAST.loadHTML("./htmls/listen-now.html");
+                }, 2500); 
+            }
+            else{
+                    alert("Unable to load file.Please try again.");
+                    PODCAST.loadHTML("./htmls/upload-recording.html");
+            }
+            }, 3000);
+        }
+        });
+    </script>

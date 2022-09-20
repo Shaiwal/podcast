@@ -1,0 +1,20 @@
+module.exports = function(_id,length,chunkSize,uploadDate,filename,md5,description,author,duration,created_by,created_on,modified_on,modified_by,isAvailable,track_icon,full_name,url) {
+    this._id = _id;
+    this.length = length;
+    this.chunkSize = chunkSize;
+    this.uploadDate = uploadDate;
+    this.filename = filename;
+    this.md5 = md5;
+    //this.metadata=metadata;  
+        this.description = description;
+        this.author = author;
+        this.duration = duration;
+        this.created_on=created_on;
+        this.created_by=created_by;
+        this.modified_on = modified_on;
+        this.modified_by = modified_by;
+        this.isAvailable = isAvailable;
+        this.track_icon = track_icon;
+  this.full_name=full_name;
+  this.url = url;
+};

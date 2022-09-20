@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Podcast POC</title>
+<link rel="stylesheet" href="css/mainPodcast.css" type="text/css" media="screen">
+<script>
+  var PODCAST = {};
+</script>
+<script src="libs/jquery-3.3.1-min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/audioPlayer.css"/>
+<script type="text/javascript" src="amplitude/amplitude.js"></script>
+<script type="text/javascript" src="js/communicator.js"></script>
+<script type="text/javascript" src="js/init.js"></script>
+<script type="text/javascript" src="js/podcastUtil.js"></script>
+</head>
+<body>
+
+<!-- header section starts -->
+<header class="clearAll"> <img src="images/cisco-logo.png" width="95" alt="Cisco Logo White">
+
+  <h2>Podcast</h2>
+  
+  <div class="submenu-wrap">
+    <button class="button is-small" type="button"></button>
+  <div class="box profle-submenu">
+  <svg width="50px" height="50px" viewBox="0 0 16 16">
+  <g><polygon points="8,3 0,13 16,13  " data-original="#030104" class="active-path" data-old_color="#ffffff" fill="#ffffff"/></g>
+  </svg>
+      <ul>
+        <li><a href="#" id="user-view-btn" class="nav-item">Admin View</a></li>
+        <li><a href="#" class="nav-item">Log out</a></li>
+      </ul>
+  </div></div>
+  </header>
+
+  <section class="upload-record-wrapper">
+      <article class="btn-action btn-bg-blue"><a id="uploadTrackLink" href="javascript:void(0);" title="Upload Audio" class="icon-upload">Upload</a></article>
+      <article class="btn-action btn-bg-disable"><a id="recordTrackLink" href="javascript:void(0);" title="Record Audio"class="icon-recorder">Record</a></article>
+  </section>
+    
+
+<!-- Content section starts -->
+<div id="contentArea" class="top-content-visible">
+</div>
+
+<!-- Share Modal -->
+<section id="myModal" class="user-login alignLeft modal">
+    <div class="modal-content">
+        <div class="modal-header">
+          <span class="close"></span>
+        <h1>Share the Recording</h1>
+        </div>
+        <div class="modal-body">
+            <div id="shareOptionSection">
+            </div>
+           <!-- <h2><strong>OR</strong></h2>
+            <h2>Share link via email address</h2>
+            <div class="user-inputs"><input type="text" id="shareEmailAddrs" placeholder="abc@cisco.com, xyz@cisco.com"></div>-->
+            <button id="shareTrackBtn" track-id="" class="btn-action btn-bg-green">Share</button>
+        </div>
+        <!--
+        <div class="modal-footer">
+          <h3>Modal Footer</h3>
+        </div>
+    -->
+    </div>
+</section>
+
+<!-- Loader Modal -->
+<section id="loaderModal" class="user-login alignLeft modal">
+  <div class="modal-content">
+      <div class="modal-body">
+        <img src="images/loader.gif" width="170">
+        <h2>Processing..</h2>
+      </div>
+  </div>
+</section>
+
+<!-- Player HTML -->
+<div class="play top-content-visible">       
+    <div id="flat-black-player-container">
+            <div id="player-screen">
+              <div class="player-header down-header">
+                <img id="down" src="images/img-slide-down.png" width="77"/>
+              </div>
+              <div id="player-top">
+                <img amplitude-song-info="cover_art_url" amplitude-main-song-info="true"/>
+              </div>
+              <div id="player-progress-bar-container">
+            <!--    <input type="range" amplitude-playlist-song-slider="true" class="amplitude-song-slider"> -->
+                <progress id="song-played-progress" class="amplitude-song-played-progress" amplitude-main-song-played-progress="true"></progress>
+                <progress id="song-buffered-progress" class="amplitude-buffered-progress" value="0"></progress>
+              </div>
+              <div id="player-middle">
+                <div id="time-container">
+                  <span class="amplitude-current-time time-container" amplitude-main-current-time="true"></span>
+                  <span class="amplitude-duration-time time-container" amplitude-main-duration-time="true"></span>
+                </div>
+                <div id="meta-container">
+                  <span amplitude-song-info="name" amplitude-main-song-info="true" class="song-name"></span>
+
+                  <div class="song-artist-album">
+                    <span amplitude-song-info="artist" amplitude-main-song-info="true"></span>
+                  </div>
+                </div>
+              </div>
+              <div id="player-bottom">
+                <div id="control-container">
+                  <div id="prev-container">
+                    <div class="amplitude-prev" id="previous"></div>
+                  </div>
+
+                  <div id="play-pause-container">
+                    <div class="amplitude-play-pause amplitude-playing" amplitude-main-play-pause="true" id="play-pause"></div>
+                  </div>
+
+                  <div id="next-container">
+                    <div class="amplitude-next" id="next"></div>
+                  </div>
+                </div>
+                <div id="volume-container">
+                  <img src="img/volume-button.svg" width="100"/><input type="range" class="amplitude-volume-slider" step=".1"/>
+                </div>
+              </div>
+            </div>
+            </div>
+</div>
+ <div id="list-screen" class="slide-in-top clearAll">
+             <!-- Code for minimized audio player  -->
+              <div id="list-screen-footer" class="clearAll">
+                  <div class="clearAll audio-thumb-name-wrap">
+                  <div id="list-screen-player-img">
+                    <img id="list-screen-img" amplitude-song-info="cover_art_url" amplitude-main-song-info="true"/>
+                  </div>
+                    <div id="list-screen-meta-container">
+                      <span amplitude-song-info="name" amplitude-main-song-info="true" class="song-name"></span>
+                    </div>
+                  </div>
+                  
+                  <div class="list-controls">
+                    <div class="list-play-pause amplitude-play-pause" amplitude-main-play-pause="true"></div>
+                    <div id="list-screen-header" class="hide-playlist"> &#x2715 </div>
+                  </div>
+              </div>
+</div> 
+<!-- Alert msg for users to update orientation -->		
+<p id="alertMsg"></p>
+    
+<!-- Footer section starts -->
+<footer>
+  <ul>
+    <li class="tab-active"><a href="javascript:void(0);" class="tab-menu tab-listen-now">Listen Now</a></li>
+    <li><a href="javascript:void(0);" class="tab-menu tab-search">Search</a></li>
+    <li><a href="javascript:void(0);" class=" tab-menu tab-notification">Notifications<span></span></a></li>
+
+  </ul>
+</footer>
+<script>
+    
+   $('div#list-screen-footer .audio-thumb-name-wrap').on('click', function(){
+      $("#contentArea").hide();
+      $("#list-screen").hide();
+      $(".play").show();
+       
+   });
+    PODCAST.minPlayer =function(){
+         $('#list').css('height', ( parseInt( $('#flat-black-player-container').height() ) - 135 )+ 'px' );
+         $('#list-screen').show();
+         $("#contentArea").show();
+         $(".play").hide();
+    }
+  $('.down-header').on('click',  PODCAST.minPlayer);
+  $('.hide-playlist').on('click', function(){
+    $('#list-screen').slideUp( 500, function(){
+	   Amplitude.pause();
+      $(this).hide(); 
+    });
+  });
+
+ // When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+
+  if (event.target == document.getElementById('myModal')){
+      $("#myModal").hide();
+  }else if (event.target == document.getElementById('loaderModal') ){
+      $("#loaderModal").hide();
+  }
+}
+</script>
+</body>
+</html>

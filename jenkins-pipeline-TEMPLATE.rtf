@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building'
+              
+                sh 'docker login -u="jenkins-ci.gen" -p="9xSxHpyUHUZfvj3KFFbrur4RVvKa/P4ClZdtpa0UktGcBaIJIdQ3gIG49h69ugiO" containers.cisco.com'
+                sh 'docker rm icxpoc-proj1  -f'
+                sh 'docker build -t containers.cisco.com/it_cits_csas/icxpocdeploy_icxpoc-proj1:latest .'
+                sh 'docker run -p 8090:8080 --name icxpoc-proj1  -d containers.cisco.com/it_cits_csas/icxpocdeploy_icxpoc-proj1'
+                sh 'docker commit icxpoc-proj1 '
+                sh 'docker push containers.cisco.com/it_cits_csas/icxpocdeploy_icxpoc-proj1:latest'
+
+            
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying'
+            }
+        }
+    }
+}
